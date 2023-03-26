@@ -1,24 +1,13 @@
 import React from 'react'
-import { Spinner } from 'react-bootstrap'
+import { Audio, Puff } from 'react-loader-spinner'
+import './Loader.css' // import CSS file for styling
+
 const Loader = () => {
   return (
-    <Spinner
-      animation='border'
-      role='status'
-      variant='danger'
-      style={{
-        width: '100px',
-        margin: 'auto',
-        height: '100px',
-        margin: 'auto',
-        marginTop: '100px',
-        display: 'block',
-      }}
-    >
-      <span className='sr-only'>Loading...</span>
-    </Spinner>
+    <div className="loader-container">
+      <Puff height="100" width="100" color="#2196f3" ariaLabel="Loading" />
+    </div>
   )
 }
 
 export default Loader
-//this is also very nice as no image is required locally

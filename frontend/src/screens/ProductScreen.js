@@ -12,6 +12,9 @@ import {
 } from '../actions/productActions'
 import { sendEmail } from '../actions/userActions'
 import { PRODUCT_REVIEW_RESET } from '../types/productConstants'
+// import './ProductScreen.css';
+
+
 const ProductScreen = ({ match, history }) => {
   const [text, setText] = useState('')
   const [comment, setComment] = useState('')

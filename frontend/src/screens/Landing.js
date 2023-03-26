@@ -35,7 +35,7 @@ const Landing = ({  match }) => {
       )}
       <Row className='align-items-center'>
         <Col>
-          <h3> Latest Items On Sale</h3>
+          <h3>Items On Sale</h3>
         </Col>
         <Col className='text-right'>
           <LinkContainer to={userData ? '/createproduct' : '/login'}>

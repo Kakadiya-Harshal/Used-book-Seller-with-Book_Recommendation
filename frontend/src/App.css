@@ -9,8 +9,9 @@ img{
 
 
 body{
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 30;
+  font-size: 15;
 
 }
 .name-label{
@@ -95,7 +96,7 @@ li{
 }
 .details{
  padding: 0.3rem;
-  background: rgb(13, 122, 150);
+  background:#343434;
   margin-left: -15px;
   margin-right: -16px;
   color:white;
