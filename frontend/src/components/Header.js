@@ -17,7 +17,7 @@ const Header = () => {
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>SecondHandSell</Navbar.Brand>
+            <Navbar.Brand style={{ fontFamily: 'Orbitron' }}>NovelNexus</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
 

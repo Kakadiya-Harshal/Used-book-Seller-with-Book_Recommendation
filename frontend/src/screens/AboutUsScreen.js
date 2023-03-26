@@ -1,50 +1,42 @@
-import React from 'react'
-import { Row, Col, Button } from 'react-bootstrap'
+import React from 'react';
+import { Row, Col } from 'react-bootstrap';
+import './AboutUsScreen.css';
 
 const AboutUsScreen = () => {
   return (
-    <div className='aboutbody'>
+    <div className='about-body'>
       <Row>
-        <Col md={3}></Col>
-        <Col md={6} className='aboutpage'>
-          <h1>Who are We?</h1>
-          <p>
-            We are third-year IT students at the DDIT University.
-            Indeed, we are not professionals, but we created this website to allow anyone to sell a used book that could help someone else.
-          </p>
+        <Col md={12}>
+          <div className='about-heading'>
+            <h1 style={{ fontSize: '36px' }}>Who are We?</h1>
+            <p style={{ fontSize: '20px' }}>
+              We are third-year IT students at DDIT University. While we are not professionals, we created this website to allow anyone to sell a used book that could help someone else.
+            </p>
+          </div>
         </Col>
-        <Col md={3}></Col>
       </Row>
       <Row>
-        <Col md={3}></Col>
-        <Col md={6} className='aboutpage1'>
-          <h1>Developer</h1>
-          <p>
-            Designed and developed by Kakadiya Harshal and Jay Kantariya
-            {/* <a href='https://upendradhamala.com.np' target='_blank'> */}
-
-            {/* </a>{' '} */}
-          </p>
-          {/* <h3>Who am I?</h3>
-          <p>
-            I am Upendra Dhamala. I am a native resident of Achham, Nepal. I am
-            currently studying Computer Engineering(final year) at IOE, WRC
-            Pokhara. There might be some bugs in this website as I am not any
-            professional and currently a web developer in making.
-          </p> */}
-          <h3>Contact Details</h3>
-          <i className='fas fa-phone'></i> 9909335856
-          <br />
-          <i className='fas fa-envelope-square'></i>{' '}
-          <a target='_blank' href={`mailto:patelharshal@gmail.com`}>
-            patelharshal@gmail.com
-          </a>
-          <br />
+        <Col md={12}>
+          <div className='developer-info'>
+            <h1 style={{ fontSize: '36px' }}>Developer</h1>
+            <p style={{ fontSize: '20px' }}>
+              This website was designed and developed by Kakadiya Harshal and Jay Kantariya.
+            </p>
+            <h3 style={{ fontSize: '28px' }}>Contact Details</h3>
+            <p style={{ fontSize: '20px' }}>
+              <i className='fas fa-phone'></i> 9909335856
+            </p>
+            <p style={{ fontSize: '20px' }}>
+              <i className='fas fa-envelope-square'></i>{' '}
+              <a target='_blank' rel='noreferrer' href={`mailto:patelharshal@gmail.com`}>
+                patelharshal@gmail.com
+              </a>
+            </p>
+          </div>
         </Col>
-        <Col md={3}></Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
-export default AboutUsScreen
+export default AboutUsScreen;
