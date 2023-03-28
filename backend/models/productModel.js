@@ -29,6 +29,7 @@
           name: {
             type: String,
             required: true,
+            trim :true,
           },
           images: [
             {
@@ -44,6 +45,14 @@
             type: String,
             required: true,
           },
+
+        //   recommandedbook:[
+        //     {
+        //     name:{
+        //       type: String,
+        //     }
+        //   }
+        // ],
           category: {
             type: String,
             required: true,  

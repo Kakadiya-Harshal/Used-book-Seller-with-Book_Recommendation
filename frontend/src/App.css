@@ -3,14 +3,14 @@
 img{
     /* padding:1rem; */
     margin: auto;
-    width:200px;
-    height:220px;
+     width:auto;
+    height:300px; 
 }
 
 
 body{
   font-family: 'Roboto', sans-serif;
-  font-weight: 30;
+  font-weight: 700;
   font-size: 15;
 
 }
@@ -50,6 +50,7 @@ a:-webkit-any-link {
 .carousel img {
   height: 350px;
   padding: 3px;
+  /* width : 10px; */
   /* margin: 4px; */
   /* border-radius: 50%; */
   margin-left: auto;

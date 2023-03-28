@@ -39,6 +39,7 @@ const ProductScreen = ({ match, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userData } = userLogin
+
   useEffect(() => {
     if (successReview) {
       setComment('')

@@ -1,16 +1,17 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import RecBook from '../models/recommendModel.js'
 
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 6
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
+      name: {
+        $regex: req.query.keyword,
+        $options: 'i',
+      },
+    }
     : {}
 
   const count = await Product.countDocuments({ ...keyword })
@@ -28,9 +29,36 @@ const getProducts = asyncHandler(async (req, res) => {
 })
 
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id);
+
+  // const recbooks = await RecBooks.find({bookname: `${product.name}`});
+
+
+  //   console.log("---------------------");
+
+  const recbook = await RecBook.find({ bookname: `${product.name}` });
+  // if(recbook)
+  // {
+  //   console.log(recbook);
+  // }
+
+  // else
+  // {
+  //   console.log("Response not send");
+  // }
+
+  //   console.log("---------------------");
+
+  console.log("---------------------");
+  console.log(product);
+  console.log("---------------------");
+  console.log(recbook);
+
   if (product) {
-    res.json(product)
+    res.json({ product: product, recbook: recbook })
+    // res.json(product);
+    
+
   } else {
     res.status(400).json({ message: 'No product found' })
   }
