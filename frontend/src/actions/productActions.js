@@ -25,9 +25,8 @@ import axios from 'axios'
 //   USER_DELETE_REQUEST,
 //   USER_DELETE_SUCCESS,
 // } from '../types/userConstants'
-export const listProducts = (keyword = '', pageNumber = '') => async (
-  dispatch
-) => {
+export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) => {
+
   try {
     dispatch({
       type: PRODUCT_DETAILS_RESET,
@@ -54,6 +53,7 @@ export const listProducts = (keyword = '', pageNumber = '') => async (
   }
 }
 
+
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -61,10 +61,13 @@ export const listProductDetails = (id) => async (dispatch) => {
     })
 
     const { data } = await axios.get(`/api/products/${id}`)
-    
+
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
-      payload: data.product,
+      payload:data.product
+       
+        // recbook: data.data1.recbook
+      
     })
 
   } catch (error) {

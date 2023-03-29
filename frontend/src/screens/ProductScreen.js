@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Meta from '../components/Meta'
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Card, Button, Form, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Message from '../components/Message'
@@ -10,8 +10,11 @@ import {
   listProductDetails,
   createProductReview,
 } from '../actions/productActions'
+import axios from 'axios'
 import { sendEmail } from '../actions/userActions'
 import { PRODUCT_REVIEW_RESET } from '../types/productConstants'
+import './RecommendSection.css';
+
 // import './ProductScreen.css';
 
 
@@ -21,6 +24,9 @@ const ProductScreen = ({ match, history }) => {
 
   const [sendMail, setSendMail] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
+
+  const [recommandbooks, setrecommandbooks] = useState("");
+  const [recom, setRecom] = useState([]);
 
   const dispatch = useDispatch()
   const emailReducer = useSelector((state) => state.emailReducer)
@@ -40,7 +46,7 @@ const ProductScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userData } = userLogin
 
-  useEffect(() => {
+  useEffect(async () => {
     if (successReview) {
       setComment('')
       dispatch({
@@ -48,6 +54,42 @@ const ProductScreen = ({ match, history }) => {
       })
     }
     dispatch(listProductDetails(match.params.id))
+    const { data } = await axios.get(`/api/products/${match.params.id}`);
+    var recom = [];
+
+    for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
+      console.log(data.product.description);
+      recom[i] = (
+        // <Carousel>
+        <Col xs={6} sm={2} md={4} lg={3} className="mb-4" key={i}>
+          {/* // <Carousel.Item> */}
+          <Card style={{ width: 'auto', height: 'auto' }} border="primary">
+            <Card.Img variant="top" src={data.recbook[0].searched_book[i].book_url} />
+            <Card.Body>
+              <Card.Title><strong>Book Name </strong> :- <u>{data.recbook[0].searched_book[i].book_title}</u></Card.Title>
+              <Card.Text>
+                Book Author :- {data.recbook[0].searched_book[i].book_author}
+              </Card.Text>
+              <Button variant="primary">Just Google it </Button>
+            </Card.Body>
+          </Card>
+          {/* // </Carousel.Item> */}
+
+        </Col>
+
+        // </Carousel>
+      );
+    }
+    setRecom(recom);
+
+    // <Container>
+    //   <Row>
+    //     {recom}
+    //   </Row>
+    // </Container>
+
+    setrecommandbooks(recom)
+    console.log(data.recbook[0].searched_book)
   }, [match.params.id, dispatch, successReview])
 
   const productDetails = useSelector((state) => state.productDetails)
@@ -109,17 +151,17 @@ const ProductScreen = ({ match, history }) => {
           <Meta title={product.name} />
           <Row className='row mb-2'>
             <Col md={6} className='image-area'>
-              <Carousel>
-                {product.images.map((image) => (
-                  <Carousel.Item key={image._id}>
-                    <Image
-                      className='d-block w-100'
-                      src={image?.image1}
-                      alt='First slide'
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
+              {/* <Carousel> */}
+              {product.images.map((image) => (
+                // <Carousel.Item key={image._id}>
+                <Image
+                  className='d-block w-100'
+                  src={image?.image1}
+                  alt='First slide'
+                />
+                // {/* </Carousel.Item> */}
+              ))}
+              {/* </Carousel> */}
             </Col>
 
             <Col className='borderaround setheight' md={6}>
@@ -148,7 +190,11 @@ const ProductScreen = ({ match, history }) => {
                 </Col>
               </Row>
             </Col>
+
+
           </Row>
+
+
           {loadingEmail && <Loader />}
           {errorEmail && <Message variant='danger'>{errorEmail}</Message>}
           {/* {console.log(dataEmail?.response)} */}
@@ -328,6 +374,31 @@ const ProductScreen = ({ match, history }) => {
               </Row>
             </Col>
           </Row>
+
+
+          <Row>
+            <Col className='borderaround mt-5' style={{ maxHeight: 'auto' }} md={10} sm={12} xs={12}>
+              <p className='details'>
+                <i className='fas fa-info'></i> Recommended Books
+              </p>
+              <Row>
+
+                {/* <Container className="d-flex justify-content-between" style={{ width: 'auto', height: '60%' }}> */}
+                <Container className="d-flex  " >
+                  <Row>
+                    
+                      {recom}
+                    
+
+                  </Row>
+                </Container>
+
+              </Row>
+            </Col>
+          </Row>
+
+
+
           <Row className='mt-3'>
             <Col md={6}>
               <h4>Buyer's Speak</h4>
@@ -383,6 +454,9 @@ const ProductScreen = ({ match, history }) => {
               </ListGroup>
             </Col>
           </Row>
+
+
+
         </>
       )}
     </>

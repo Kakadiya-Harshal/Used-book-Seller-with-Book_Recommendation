@@ -89,7 +89,7 @@ li{
 .borderaround{
   
   border:1px solid rgb(190, 190, 211);
-  max-height: 500px;
+  max-height: auto;
   /* margin:0.1rem; */
   margin-top: 1rem;
   overflow: hidden;

@@ -53,9 +53,11 @@ const getProductById = asyncHandler(async (req, res) => {
   console.log(product);
   console.log("---------------------");
   console.log(recbook);
+  // const response = {product,recbook} 
 
   if (product) {
-    res.json({ product: product, recbook: recbook })
+    res.json({ product : product , recbook : recbook });
+    // res.json({data1:response});
     // res.json(product);
     
 
