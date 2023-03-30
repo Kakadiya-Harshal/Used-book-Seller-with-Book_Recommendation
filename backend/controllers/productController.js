@@ -29,41 +29,36 @@ const getProducts = asyncHandler(async (req, res) => {
 })
 
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
 
-  // const recbooks = await RecBooks.find({bookname: `${product.name}`});
+  try {
+    const product = await Product.findById(req.params.id);
 
 
-  //   console.log("---------------------");
+    const recbook = await RecBook.find({ bookname: `${product.name}` });
 
-  const recbook = await RecBook.find({ bookname: `${product.name}` });
-  // if(recbook)
-  // {
-  //   console.log(recbook);
-  // }
 
-  // else
-  // {
-  //   console.log("Response not send");
-  // }
+    // console.log("---------------------");
+    // console.log(product);
+    // console.log("---------------------");
+    // console.log(recbook);
+    // const response = {product,recbook} 
 
-  //   console.log("---------------------");
+    if (product) {
+      res.json({ product: product, recbook: recbook });
+      // res.json({data1:response});
+      // res.json(product);
 
-  console.log("---------------------");
-  console.log(product);
-  console.log("---------------------");
-  console.log(recbook);
-  // const response = {product,recbook} 
 
-  if (product) {
-    res.json({ product : product , recbook : recbook });
-    // res.json({data1:response});
-    // res.json(product);
-    
+    } else {
+      res.status(400).json({ message: 'No product found' })
+    }
 
-  } else {
-    res.status(400).json({ message: 'No product found' })
+  } catch (err) {
+
+    console.log(err);
+
   }
+
 })
 
 //delete product by admin
