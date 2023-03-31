@@ -49,7 +49,7 @@ const LoginScreen = ({ location, history }) => {
             required
           ></Form.Control>
         </Form.Group>
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='outline-success' className='p-2'>
           Sign In
         </Button>
       </Form>{' '}

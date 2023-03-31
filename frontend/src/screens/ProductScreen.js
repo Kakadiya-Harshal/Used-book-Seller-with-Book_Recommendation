@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import Carousel from 'react-bootstrap/Carousel'
 import {
   listProductDetails,
   createProductReview,
@@ -13,12 +12,11 @@ import {
 import axios from 'axios'
 import { sendEmail } from '../actions/userActions'
 import { PRODUCT_REVIEW_RESET } from '../types/productConstants'
-import './RecommendSection.css';
 
-// import './ProductScreen.css';
 
 
 const ProductScreen = ({ match, history }) => {
+  const [data1, setData1] = useState('');
   const [text, setText] = useState('')
   const [comment, setComment] = useState('')
 
@@ -54,39 +52,37 @@ const ProductScreen = ({ match, history }) => {
       })
     }
     dispatch(listProductDetails(match.params.id))
+
     const { data } = await axios.get(`/api/products/${match.params.id}`);
     var recom = [];
+    setData1(data);
+    if (data.recbook.length != 0) {
+      console.log("HI harshal")
+      for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
+        console.log(data.product.description);
+        recom[i] = (
+          <Col xs={6} sm={2} md={4} lg={3} className="mb-4" key={i}>
+            <Card style={{ width: 'auto', height: 'auto' }} border="primary">
+              <Card.Img variant="top" src={data.recbook[0].searched_book[i].book_url} />
+              <Card.Body>
+                <Card.Title><strong>Book Name </strong> :- <u>{data.recbook[0].searched_book[i].book_title}</u></Card.Title>
+                <Card.Text>
+                  Book Author :- {data.recbook[0].searched_book[i].book_author}
+                </Card.Text>
+                <Button variant="primary">Just Google it </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        );
+      }
 
-    for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
-      console.log(data.product.description);
-      recom[i] = (
-        // <Carousel>
-        <Col xs={6} sm={2} md={4} lg={3} className="mb-4" key={i}>
-          {/* // <Carousel.Item> */}
-          <Card style={{ width: 'auto', height: 'auto' }} border="primary">
-            <Card.Img variant="top" src={data.recbook[0].searched_book[i].book_url} />
-            <Card.Body>
-              <Card.Title><strong>Book Name </strong> :- <u>{data.recbook[0].searched_book[i].book_title}</u></Card.Title>
-              <Card.Text>
-                Book Author :- {data.recbook[0].searched_book[i].book_author}
-              </Card.Text>
-              <Button variant="primary">Just Google it </Button>
-            </Card.Body>
-          </Card>
-          {/* // </Carousel.Item> */}
 
-        </Col>
 
-        // </Carousel>
-      );
+
+
     }
     setRecom(recom);
 
-    // <Container>
-    //   <Row>
-    //     {recom}
-    //   </Row>
-    // </Container>
 
     setrecommandbooks(recom)
     console.log(data.recbook[0].searched_book)
@@ -386,9 +382,9 @@ const ProductScreen = ({ match, history }) => {
                 {/* <Container className="d-flex justify-content-between" style={{ width: 'auto', height: '60%' }}> */}
                 <Container className="d-flex  " >
                   <Row>
-                    
-                      {recom}
-                    
+
+                    {recom}
+
 
                   </Row>
                 </Container>
