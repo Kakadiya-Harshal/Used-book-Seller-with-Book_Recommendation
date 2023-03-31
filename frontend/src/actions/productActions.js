@@ -36,7 +36,7 @@ export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) 
     })
 
     const { data } = await axios.get(
-      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      `https://used-book-seller.onrender.com/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
     )
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -60,7 +60,7 @@ export const listProductDetails = (id) => async (dispatch) => {
       type: PRODUCT_DETAILS_REQUEST,
     })
 
-    const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await axios.get(`https://used-book-seller.onrender.com/api/products/${id}`)
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -98,7 +98,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     }
 
     await axios.delete(
-      `/api/products/${id}`,
+      `https://used-book-seller.onrender.com/api/products/${id}`,
 
       config
     )
@@ -144,7 +144,7 @@ export const createProduct = (
     console.log('reached here')
     console.log(config)
     const { data } = await axios.post(
-      `/api/products`,
+      `https://used-book-seller.onrender.com/api/products`,
       {
         name,
         images: [{ image1 }],
@@ -203,7 +203,7 @@ export const updateProduct = (
     console.log('reached here')
     console.log(config)
     const { data } = await axios.put(
-      `/api/products/${id}`,
+      `https://used-book-seller.onrender.com/api/products/${id}`,
       {
         name,
         images: [{ image1: image1 }],
@@ -252,7 +252,7 @@ export const createProductReview = (productId, comment) => async (
       },
     }
 
-    await axios.post(`/api/products/${productId}/reviews`, { comment }, config)
+    await axios.post(`https://used-book-seller.onrender.com/api/products/${productId}/reviews`, { comment }, config)
     dispatch({
       type: PRODUCT_REVIEW_SUCCESS,
     })
