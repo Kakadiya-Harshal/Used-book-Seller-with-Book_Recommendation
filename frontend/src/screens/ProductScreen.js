@@ -1,71 +1,84 @@
-import React, { useState, useEffect } from 'react'
-import Meta from '../components/Meta'
-import { Row, Col, Image, ListGroup, Card, Button, Form, Container } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+import React, { useState, useEffect } from "react";
+import Meta from "../components/Meta";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+  Container,
+} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 import {
   listProductDetails,
   createProductReview,
-} from '../actions/productActions'
-import axios from 'axios'
-import { sendEmail } from '../actions/userActions'
-import { PRODUCT_REVIEW_RESET } from '../types/productConstants'
-
-
+} from "../actions/productActions";
+import axios from "axios";
+import { sendEmail } from "../actions/userActions";
+import { PRODUCT_REVIEW_RESET } from "../types/productConstants";
 
 const ProductScreen = ({ match, history }) => {
-  const [data1, setData1] = useState('');
-  const [text, setText] = useState('')
-  const [comment, setComment] = useState('')
+  const [data1, setData1] = useState("");
+  const [text, setText] = useState("");
+  const [comment, setComment] = useState("");
 
-  const [sendMail, setSendMail] = useState(false)
-  const [emailSent, setEmailSent] = useState(false)
+  const [sendMail, setSendMail] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const [recommandbooks, setrecommandbooks] = useState("");
   const [recom, setRecom] = useState([]);
 
-  const dispatch = useDispatch()
-  const emailReducer = useSelector((state) => state.emailReducer)
+  const dispatch = useDispatch();
+  const emailReducer = useSelector((state) => state.emailReducer);
   const {
     loading: loadingEmail,
     error: errorEmail,
     data: dataEmail,
-  } = emailReducer
+  } = emailReducer;
 
-  const productReviewCreate = useSelector((state) => state.productReviewCreate)
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
   const {
     loading: loadingReview,
     error: errorReview,
     success: successReview,
-  } = productReviewCreate
+  } = productReviewCreate;
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userData } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userData } = userLogin;
 
   useEffect(async () => {
     if (successReview) {
-      setComment('')
+      setComment("");
       dispatch({
         type: PRODUCT_REVIEW_RESET,
-      })
+      });
     }
-    dispatch(listProductDetails(match.params.id))
+    dispatch(listProductDetails(match.params.id));
 
     const { data } = await axios.get(`/api/products/${match.params.id}`);
     var recom = [];
     setData1(data);
     if (data.recbook.length != 0) {
-      console.log("HI harshal")
+      console.log("HI harshal");
       for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
         console.log(data.product.description);
         recom[i] = (
           <Col xs={6} sm={2} md={4} lg={3} className="mb-4" key={i}>
-            <Card style={{ width: 'auto', height: 'auto' }} border="primary">
-              <Card.Img variant="top" src={data.recbook[0].searched_book[i].book_url} />
+            <Card style={{ width: "auto", height: "auto" }} border="primary">
+              <Card.Img
+                variant="top"
+                src={data.recbook[0].searched_book[i].book_url}
+              />
               <Card.Body>
-                <Card.Title><strong>Book Name </strong> :- <u>{data.recbook[0].searched_book[i].book_title}</u></Card.Title>
+                <Card.Title>
+                  <strong>Book Name </strong> :-{" "}
+                  <u>{data.recbook[0].searched_book[i].book_title}</u>
+                </Card.Title>
                 <Card.Text>
                   Book Author :- {data.recbook[0].searched_book[i].book_author}
                 </Card.Text>
@@ -75,28 +88,22 @@ const ProductScreen = ({ match, history }) => {
           </Col>
         );
       }
-
-
-
-
-
     }
     setRecom(recom);
 
+    setrecommandbooks(recom);
+    console.log(data.recbook[0].searched_book);
+  }, [match.params.id, dispatch, successReview]);
 
-    setrecommandbooks(recom)
-    console.log(data.recbook[0].searched_book)
-  }, [match.params.id, dispatch, successReview])
-
-  const productDetails = useSelector((state) => state.productDetails)
-  const { loading, error, product } = productDetails
+  const productDetails = useSelector((state) => state.productDetails);
+  const { loading, error, product } = productDetails;
   const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch(createProductReview(match.params.id, comment))
-  }
+    e.preventDefault();
+    dispatch(createProductReview(match.params.id, comment));
+  };
   const emailSubmit = (e) => {
-    e.preventDefault()
-    setEmailSent(true)
+    e.preventDefault();
+    setEmailSent(true);
 
     dispatch(
       sendEmail(
@@ -108,31 +115,31 @@ const ProductScreen = ({ match, history }) => {
         userData?.email,
         userData?.contact?.phone_no
       )
-    )
+    );
 
-    setText('')
+    setText("");
 
-    setSendMail(false)
+    setSendMail(false);
     setTimeout(() => {
-      setEmailSent(false)
-    }, 10000)
-  }
+      setEmailSent(false);
+    }, 10000);
+  };
   const sendEMAIL = () => {
-    setSendMail(true)
-  }
+    setSendMail(true);
+  };
   const cancelHandler = () => {
-    setSendMail(false)
-  }
+    setSendMail(false);
+  };
   return (
     <>
-      <Link to='/' className='btn btn-success my-3'>
+      <Link to="/" className="btn btn-success my-3">
         Go Back
       </Link>
       <br />
       {userData && userData._id === product.user && (
         <Link
           to={`/admin/product/${match.params.id}/edit`}
-          className='btn btn-primary my-3'
+          className="btn btn-primary my-3"
         >
           Edit Product
         </Link>
@@ -141,32 +148,32 @@ const ProductScreen = ({ match, history }) => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Message variant="danger">{error}</Message>
       ) : (
         <>
           <Meta title={product.name} />
-          <Row className='row mb-2'>
-            <Col md={6} className='image-area'>
+          <Row className="row mb-2">
+            <Col md={6} className="image-area">
               {/* <Carousel> */}
               {product.images.map((image) => (
                 // <Carousel.Item key={image._id}>
                 <Image
-                  className='d-block w-100'
+                  className="d-block w-100"
                   src={image?.image1}
-                  alt='First slide'
+                  alt="First slide"
                 />
                 // {/* </Carousel.Item> */}
               ))}
               {/* </Carousel> */}
             </Col>
 
-            <Col className='borderaround setheight' md={6}>
-              <p className='details'>
-                <i className='fas fa-info'></i> General Details
+            <Col className="borderaround setheight" md={6}>
+              <p className="details">
+                <i className="fas fa-info"></i> General Details
               </p>
 
               <Row>
-                <Col className='product  ' md={4} sm={4} xs={4}>
+                <Col className="product  " md={4} sm={4} xs={4}>
                   <ul>
                     <li> Product Id:</li>
 
@@ -186,47 +193,44 @@ const ProductScreen = ({ match, history }) => {
                 </Col>
               </Row>
             </Col>
-
-
           </Row>
 
-
           {loadingEmail && <Loader />}
-          {errorEmail && <Message variant='danger'>{errorEmail}</Message>}
+          {errorEmail && <Message variant="danger">{errorEmail}</Message>}
           {/* {console.log(dataEmail?.response)} */}
           {dataEmail && emailSent && (
-            <Message variant='success'>{dataEmail.response}</Message>
+            <Message variant="success">{dataEmail.response}</Message>
           )}
           {sendMail && userData && (
-            <Row id='email' className='mt-5'>
-              <Col md={10} sm={12} className='formAround'>
+            <Row id="email" className="mt-5">
+              <Col md={10} sm={12} className="formAround">
                 <Form onSubmit={emailSubmit}>
-                  <div className='text-area1'>
-                    <span className='text-area2'>Send Email</span>
+                  <div className="text-area1">
+                    <span className="text-area2">Send Email</span>
 
-                    <p className='text-area3'>
+                    <p className="text-area3">
                       Get in touch with {product?.seller?.sellername}
                     </p>
                   </div>
                   <Row>
                     <Col md={4} sm={4} xs={4}>
-                      <ul className='marginshift'>
-                        <p>{''}</p>
+                      <ul className="marginshift">
+                        <p>{""}</p>
                         <br />
-                        <li className='mt-2'>Your Name:</li>
+                        <li className="mt-2">Your Name:</li>
                         <li>Your Email:</li>
                         <li>Your Phone No:</li>
                         <li>Your Message:</li>
                       </ul>
                     </Col>
                     <Col md={8} sm={8} xs={8}>
-                      <p className='cross'>
+                      <p className="cross">
                         <button
                           onClick={cancelHandler}
-                          className=' cancel m-auto '
+                          className=" cancel m-auto "
                         >
-                          {' '}
-                          <i className='far fa-window-close'></i>
+                          {" "}
+                          <i className="far fa-window-close"></i>
                         </button>
                       </p>
                       <li>{userData.name}</li>
@@ -234,18 +238,18 @@ const ProductScreen = ({ match, history }) => {
                       <li>{userData?.contact?.phone_no}</li>
                       <li>
                         <textarea
-                          style={{ maxWidth: '100%', borderRadius: '5px' }}
-                          id='w3review'
-                          name='text'
+                          style={{ maxWidth: "100%", borderRadius: "5px" }}
+                          id="w3review"
+                          name="text"
                           value={text}
                           onChange={(e) => setText(e.target.value)}
-                          rows='8'
-                          cols='55'
+                          rows="8"
+                          cols="55"
                           required
                         />
                       </li>
                     </Col>
-                    <button className='button ' type='submit'>
+                    <button className="button " type="submit">
                       Send Email
                     </button>
                   </Row>
@@ -254,13 +258,13 @@ const ProductScreen = ({ match, history }) => {
             </Row>
           )}
           <Row>
-            <Col className='borderaround mt-5' md={10}>
-              <p className='details'>
-                <i className='fas fa-info'></i> Seller Details
+            <Col className="borderaround mt-5" md={10}>
+              <p className="details">
+                <i className="fas fa-info"></i> Seller Details
               </p>
 
-              <Row className='mb-2'>
-                <Col className='product' md={4} sm={2} xs={2}>
+              <Row className="mb-2">
+                <Col className="product" md={4} sm={2} xs={2}>
                   <ul>
                     <li> Name:</li>
 
@@ -278,7 +282,7 @@ const ProductScreen = ({ match, history }) => {
                       {/* {product?.seller?.selleremail}{' '} */}
                       <span>
                         <button
-                          className='emailbutton btn-success'
+                          className="emailbutton btn-success"
                           onClick={sendEMAIL}
                         >
                           Send Email
@@ -287,19 +291,19 @@ const ProductScreen = ({ match, history }) => {
                     </li>
                     <li>{product?.seller?.selleraddress}</li>
                     <li>
-                      {product?.seller?.phoneNo?.mobile}{' '}
+                      {product?.seller?.phoneNo?.mobile}{" "}
                       <span>
                         {product?.seller?.phoneNo?.isVerified ? (
                           <span>
-                            <i className='fas fa-mobile-alt'></i>
-                            <span className='underlined'>verified</span>
+                            <i className="fas fa-mobile-alt"></i>
+                            <span className="underlined">verified</span>
                           </span>
                         ) : (
                           <span>
-                            <i className='fas fa-mobile-alt'></i>
-                            <span className='underlined'>unverified</span>
+                            <i className="fas fa-mobile-alt"></i>
+                            <span className="underlined">unverified</span>
                           </span>
-                        )}{' '}
+                        )}{" "}
                       </span>
                     </li>
                     <li></li>
@@ -307,22 +311,22 @@ const ProductScreen = ({ match, history }) => {
                 </Col>
               </Row>
               {sendMail && !userData && (
-                <Message variant='danger'>
-                  You need to be logged in to use this feature.{' '}
+                <Message variant="danger">
+                  You need to be logged in to use this feature.{" "}
                   <span>
-                    <Link to='/login'>Log In</Link> to Continue
+                    <Link to="/login">Log In</Link> to Continue
                   </span>
                 </Message>
               )}
             </Col>
           </Row>
-          <Row className='mt-3'>
-            <Col className='borderaround mt-5 ' md={10}>
-              <p className='details'>
-                <i className='fas fa-info'></i> Pricing Details
+          <Row className="mt-3">
+            <Col className="borderaround mt-5 " md={10}>
+              <p className="details">
+                <i className="fas fa-info"></i> Pricing Details
               </p>
               <Row>
-                <Col className='product' md={6} sm={6} xs={4}>
+                <Col className="product" md={6} sm={6} xs={4}>
                   <ul>
                     <li>Total Price:</li>
                     {product?.Cost?.negotiable && <li>Negotiable:</li>}
@@ -338,20 +342,20 @@ const ProductScreen = ({ match, history }) => {
             </Col>
           </Row>
           <Row>
-            <Col className='borderaround mt-5' md={10} sm={12} xs={12}>
-              <p className='details '>
-                <i className='fas fa-info'></i> Description
+            <Col className="borderaround mt-5" md={10} sm={12} xs={12}>
+              <p className="details ">
+                <i className="fas fa-info"></i> Description
               </p>
-              <p className='detailsdescription'>{product.description}</p>
+              <p className="detailsdescription">{product.description}</p>
             </Col>
           </Row>
           <Row>
-            <Col className='borderaround mt-5' md={10}>
-              <p className='details'>
-                <i className='fas fa-info'></i> Delivery Information
+            <Col className="borderaround mt-5" md={10}>
+              <p className="details">
+                <i className="fas fa-info"></i> Delivery Information
               </p>
               <Row>
-                <Col className='product' md={6} sm={6} xs={5}>
+                <Col className="product" md={6} sm={6} xs={5}>
                   <ul>
                     <li>Delivery Area:</li>
                     <li>Delivery Charge:</li>
@@ -361,8 +365,8 @@ const ProductScreen = ({ match, history }) => {
                   <ul>
                     <li>{product?.shippingAddress?.address} </li>
                     <li>
-                      {' '}
-                      Rs {''}
+                      {" "}
+                      Rs {""}
                       {product?.shippingAddress?.shippingCharge}
                     </li>
                   </ul>
@@ -371,47 +375,43 @@ const ProductScreen = ({ match, history }) => {
             </Col>
           </Row>
 
-
           <Row>
-            <Col className='borderaround mt-5' style={{ maxHeight: 'auto' }} md={10} sm={12} xs={12}>
-              <p className='details'>
-                <i className='fas fa-info'></i> Recommended Books
+            <Col
+              className="borderaround mt-5"
+              style={{ maxHeight: "auto" }}
+              md={10}
+              sm={12}
+              xs={12}
+            >
+              <p className="details">
+                <i className="fas fa-info"></i> Recommended Books
               </p>
               <Row>
-
                 {/* <Container className="d-flex justify-content-between" style={{ width: 'auto', height: '60%' }}> */}
-                <Container className="d-flex  " >
-                  <Row>
-
-                    {recom}
-
-
-                  </Row>
+                <Container className="d-flex  ">
+                  <Row>{recom}</Row>
                 </Container>
-
               </Row>
             </Col>
           </Row>
 
-
-
-          <Row className='mt-3'>
+          <Row className="mt-3">
             <Col md={6}>
               <h4>Buyer's Speak</h4>
               {product.reviews.length === 0 && (
-                <Message variant='primary'>Be the First One to Review</Message>
+                <Message variant="primary">Be the First One to Review</Message>
               )}
-              <ListGroup variant='flush'>
+              <ListGroup variant="flush">
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
                     {/* <strong>{review.name}</strong>
                     <p>{review.createdAt.substring(0, 10)}</p> */}
                     <p>
-                      Q.<span className='comment'> {review.comment} </span>
-                      <span className='review'>
-                        <span style={{ color: '#32a897', fontWeight: '800' }}>
-                          --Posted By <strong>{review.name}</strong> on{' '}
-                          <strong> {review.createdAt.substring(0, 10)} </strong>{' '}
+                      Q.<span className="comment"> {review.comment} </span>
+                      <span className="review">
+                        <span style={{ color: "#32a897", fontWeight: "800" }}>
+                          --Posted By <strong>{review.name}</strong> on{" "}
+                          <strong> {review.createdAt.substring(0, 10)} </strong>{" "}
                         </span>
                       </span>
                     </p>
@@ -421,42 +421,39 @@ const ProductScreen = ({ match, history }) => {
                 <ListGroup.Item>
                   <p>Post Your Speak</p>
                   {errorReview && (
-                    <Message variant='danger'>{errorReview}</Message>
+                    <Message variant="danger">{errorReview}</Message>
                   )}
 
                   {loadingReview && <Loader />}
                   {userData ? (
                     <Form onSubmit={submitHandler}>
-                      <Form.Group controlId='comment'>
+                      <Form.Group controlId="comment">
                         {/* <Form.Label>Comment</Form.Label> */}
                         <Form.Control
-                          as='textarea'
-                          row='3'
+                          as="textarea"
+                          row="3"
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type='submit' variant='primary'>
+                      <Button type="submit" variant="primary">
                         Post
                       </Button>
                     </Form>
                   ) : (
-                    <Message variant='primary'>
-                      You must <Link to='/login'>Log In</Link> to post your
-                      speak{' '}
+                    <Message variant="primary">
+                      You must <Link to="/login">Log In</Link> to post your
+                      speak{" "}
                     </Message>
                   )}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
           </Row>
-
-
-
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProductScreen
+export default ProductScreen;

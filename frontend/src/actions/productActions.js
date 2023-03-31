@@ -64,10 +64,10 @@ export const listProductDetails = (id) => async (dispatch) => {
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
-      payload:data.product
-       
-        // recbook: data.data1.recbook
-      
+      payload: data.product
+
+      // recbook: data.data1.recbook
+
     })
 
   } catch (error) {

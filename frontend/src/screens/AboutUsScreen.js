@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import './AboutUsScreen.css';
+
+import '../App.css';
 
 const AboutUsScreen = () => {
   return (

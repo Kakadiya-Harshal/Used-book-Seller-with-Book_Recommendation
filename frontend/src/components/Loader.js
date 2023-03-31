@@ -1,6 +1,7 @@
 import React from 'react'
 import { Audio, Puff } from 'react-loader-spinner'
-import './Loader.css' // import CSS file for styling
+// import CSS file for styling
+import '../App.css';
 
 const Loader = () => {
   return (

@@ -34,7 +34,7 @@ const ProductCreateScreen = ({ history }) => {
   }, [history, success, userData])
 
   // const CLOUDINARY_URL ="https://api.cloudinary.com/v1_1/ddwkehsqt/image/upload";
-  
+
   const uploadFileHandler = async (e) => {
     const { data: CLOUDINARY_URL } = await axios.get('/api/config/cloudinary')
 
