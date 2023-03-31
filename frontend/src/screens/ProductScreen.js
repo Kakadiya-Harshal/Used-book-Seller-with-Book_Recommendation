@@ -82,7 +82,7 @@ const ProductScreen = ({ match, history }) => {
                 <Card.Text>
                   Book Author :- {data.recbook[0].searched_book[i].book_author}
                 </Card.Text>
-                <Button variant="primary">Just Google it </Button>
+                {/* <Button variant="primary">Just Google it </Button> */}
               </Card.Body>
             </Card>
           </Col>
@@ -162,9 +162,7 @@ const ProductScreen = ({ match, history }) => {
                   src={image?.image1}
                   alt="First slide"
                 />
-                // {/* </Carousel.Item> */}
               ))}
-              {/* </Carousel> */}
             </Col>
 
             <Col className="borderaround setheight" md={6}>
