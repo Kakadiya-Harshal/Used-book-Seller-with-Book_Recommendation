@@ -12,11 +12,11 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/uploads", uploadRoutes);
-app.use(cors());
 app.get("/api/config/cloudinary", (req, res) => {
   res.send(process.env.CLOUDINARY_URL);
 });
