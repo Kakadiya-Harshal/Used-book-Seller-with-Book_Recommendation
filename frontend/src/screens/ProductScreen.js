@@ -21,7 +21,7 @@ import {
 import axios from "axios";
 import { sendEmail } from "../actions/userActions";
 import { PRODUCT_REVIEW_RESET } from "../types/productConstants";
-
+import Backward from "./Backward";
 const ProductScreen = ({ match, history }) => {
   const [data1, setData1] = useState("");
   const [text, setText] = useState("");
@@ -132,8 +132,10 @@ const ProductScreen = ({ match, history }) => {
   };
   return (
     <>
-      <Link to="/" className="btn btn-success my-3">
-        Go Back
+      <Link to="/">
+        <div style={{height:'42px' ,width:'42px'}}>
+          <Backward />
+        </div>
       </Link>
       <br />
       {userData && userData._id === product.user && (
