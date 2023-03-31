@@ -60,11 +60,11 @@ const ProductScreen = ({ match, history }) => {
     }
     dispatch(listProductDetails(match.params.id));
 
-    const { data } = await axios.get(`/api/products/${match.params.id}`);
+    const { data } = await axios.get(`https://used-book-seller.onrender.com/api/products/${match.params.id}`);
     var recom = [];
     setData1(data);
     if (data.recbook.length != 0) {
-      console.log("HI harshal");
+      
       for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
         console.log(data.product.description);
         recom[i] = (
