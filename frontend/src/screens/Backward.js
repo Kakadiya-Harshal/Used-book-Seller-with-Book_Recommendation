@@ -1,3 +1,7 @@
+
+//This Function display icon which indicates to go back to previous page
+
+
 import React, { useState } from "react";
 
 const Backward = () => {
