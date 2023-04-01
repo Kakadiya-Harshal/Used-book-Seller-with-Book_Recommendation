@@ -84,7 +84,8 @@ Start the client
 
 ## Made By
 
-[![Contributors List](https://contrib.rocks/image?repo=Kakadiya-Harshal/Used-book-Seller-with-Recommendation)](https://github.com/Kakadiya-Harshal/Used-book-Seller-with-Recommendation/graphs/contributors)
+- [@Kakadiya-Harshal](https://github.com/Kakadiya-Harshal)
+- [@jaykantariya123](https://github.com/jaykantariya123)
 
 
 
