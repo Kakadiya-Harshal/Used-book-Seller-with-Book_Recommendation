@@ -42,7 +42,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "https://used-book-seller.onrender.com/api/users/login",
+      "/api/users/login",
       { email, password },
       config
     );
@@ -99,7 +99,7 @@ export const verify =
       // console.log(phone_no)
 
       const { data } = await axios.post(
-        "https://used-book-seller.onrender.com/api/users/verificationlink",
+        "/api/users/verificationlink",
         { name, email, password, contact: { phone_no }, address },
         config
       );
@@ -132,7 +132,7 @@ export const register = (token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "https://used-book-seller.onrender.com/api/users",
+      "/api/users",
       { token },
       config
     );
@@ -179,7 +179,7 @@ export const sendEmail =
       };
 
       const { data } = await axios.post(
-        "https://used-book-seller.onrender.com/api/users/email",
+        "/api/users/email",
         { receiver, text, name, address, productName, email, phone_no },
         config
       );
@@ -215,7 +215,7 @@ export const listUsers = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      "https://used-book-seller.onrender.com/api/users",
+      "/api/users",
 
       config
     );
@@ -251,7 +251,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     };
 
     await axios.delete(
-      `https://used-book-seller.onrender.com/api/users/${id}`,
+      `/api/users/${id}`,
 
       config
     );
@@ -289,7 +289,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     console.log(config);
     // console.log(id)
     const { data } = await axios.put(
-      `https://used-book-seller.onrender.com/api/users/${user._id}`,
+      `/api/users/${user._id}`,
       user,
       config
     );
@@ -327,7 +327,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `https://used-book-seller.onrender.com/api/users/${id}`,
+      `/api/users/${id}`,
       config
     );
 

@@ -60,7 +60,7 @@ const ProductScreen = ({ match, history }) => {
     }
     dispatch(listProductDetails(match.params.id));
 
-    const { data } = await axios.get(`https://used-book-seller.onrender.com/api/products/${match.params.id}`);
+    const { data } = await axios.get(`/api/products/${match.params.id}`);
     var recom = [];
     setData1(data);
     if (data.recbook.length != 0) {
