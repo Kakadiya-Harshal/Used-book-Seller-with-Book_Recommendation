@@ -5,7 +5,7 @@ from Recommendation_Model import *
 
 
 myclient = pymongo.MongoClient(
-    "mongodb+srv://book:book@sdp.bijddr4.mongodb.net/?retryWrites=true&w=majority")
+    "MogoDb Database link")
 mydb = myclient["test"]
 mycol = mydb["recbooks"]
 
