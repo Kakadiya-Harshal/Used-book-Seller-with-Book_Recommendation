@@ -123,7 +123,7 @@ const ProductCreateScreen = ({ history }) => {
               <Form.Label>Category </Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter category like: electronics, books, Furniture.. '
+                placeholder='Enter category like: Sci-fi, Horror, Biography... '
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
