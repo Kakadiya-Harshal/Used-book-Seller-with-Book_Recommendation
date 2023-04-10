@@ -1,7 +1,7 @@
 
 # NovelNexus
 
-NovelNexus is MERN Stack application for buy and sell second hand book online. Uses collaborative recommended Modle for searching book efficiently.
+NovelNexus is MERN Stack application for buy and sell second hand book online. Uses collaborative recommended Model for searching book efficiently.
 
 
 ## Tech Stack
