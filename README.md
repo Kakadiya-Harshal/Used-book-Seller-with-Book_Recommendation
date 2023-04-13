@@ -59,7 +59,7 @@ Start the client
 
 # Registration/login
 
-![Screenshot 2023-04-01 163742](https://user-images.githubusercontent.com/113932440/229285270-bd26a98b-5f12-4be4-bcf9-a9a1355c00ad.png)
+<img src="frontend\public\readmePhotos\Search Book.png" alt="Search book">
 
 ![Screenshot 2023-04-01 164704](https://user-images.githubusercontent.com/113932440/229285660-094c13ab-0b1f-408b-a403-ad7c096353ef.png)
 
