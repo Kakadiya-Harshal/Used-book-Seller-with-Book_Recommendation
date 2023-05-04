@@ -81,13 +81,13 @@ const ProductCreateScreen = ({ history }) => {
   return (
     <>
       <FormContainer>
-        <h1>Upload Your Property</h1>
+        <h1>Upload Book</h1>
         {loading ? (
           <Loader />
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
-              <Form.Label>Name of the property </Form.Label>
+              <Form.Label>Book Details</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter what product do you have'
@@ -131,7 +131,7 @@ const ProductCreateScreen = ({ history }) => {
             </Form.Group>
 
             <Form.Group controlId='description'>
-              <Form.Label>Describe your property </Form.Label>
+              <Form.Label>Describe Book Details </Form.Label>
 
               <Form.Control
                 as='textarea'
@@ -194,7 +194,7 @@ const ProductCreateScreen = ({ history }) => {
             </Form.Group>
 
             <Button className='mb-1' type='submit' variant='primary'>
-              Upload your property
+              Upload Book
             </Button>
             {error && <Message variant='danger'>{error}</Message>}
           </Form>
