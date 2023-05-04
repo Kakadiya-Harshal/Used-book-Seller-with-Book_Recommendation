@@ -15,7 +15,7 @@ NovelNexus is MERN Stack application for buy and sell second hand book online. U
 
 ## Home page
 
-![Screenshot 2023-04-01 161919](https://user-images.githubusercontent.com/113932440/229284578-68538a5c-91e3-4c98-b3d8-402b754f207a.png)
+![Home page](https://user-images.githubusercontent.com/113292495/231663227-7ad7d649-4ea4-4eaf-b7c3-e1ec4c1c4917.png)
 
 
 ## Run Locally
@@ -57,32 +57,25 @@ Start the client
 
 ## Features
 
-# Registration/login
+# Register/SignUp
+![Register Page](https://user-images.githubusercontent.com/113292495/231662848-82f9fc27-5a38-4205-b2a3-4dba0c65affd.png)
+![Sign in page](https://user-images.githubusercontent.com/113292495/231662867-1b9a256e-7e13-422b-8157-c4763a1755d6.png)
 
-![Screenshot 2023-04-01 163742](https://user-images.githubusercontent.com/113932440/229285270-bd26a98b-5f12-4be4-bcf9-a9a1355c00ad.png)
-
-![Screenshot 2023-04-01 164704](https://user-images.githubusercontent.com/113932440/229285660-094c13ab-0b1f-408b-a403-ad7c096353ef.png)
-
-# Search book 
-
-![Screenshot 2023-04-01 165015](https://user-images.githubusercontent.com/113932440/229285769-9153d2f6-d202-41d8-8c55-fe5eeec4948f.png)
+# Search Book 
+![Search Book](https://user-images.githubusercontent.com/113292495/231662712-11a98de2-1a04-43cb-bd15-27e661088c7a.png)
 
 # Recommended Book 
-
-![Screenshot 2023-04-01 165302](https://user-images.githubusercontent.com/113932440/229285912-cb230a57-b8b0-4a86-a7ae-a092f72f4544.png)
-![Screenshot 2023-04-01 170115](https://user-images.githubusercontent.com/113932440/229286275-6b76ce71-eb7f-41f9-a130-805ab53ff30a.png)
+![Recommended books](https://user-images.githubusercontent.com/113292495/231662893-6b432d94-f800-4601-98b0-aed19248dbd8.png)
 
 # About us
-
-![Screenshot 2023-04-01 170411](https://user-images.githubusercontent.com/113932440/229286368-b88c7349-177a-4eea-a44c-586b159fae11.png)
+![About us](https://user-images.githubusercontent.com/113292495/231662915-5045617a-c0a4-4b31-bb34-67aa3acd3ff9.png)
 
 # Admin section
 
-![Screenshot 2023-04-01 170817](https://user-images.githubusercontent.com/113932440/229286505-44cc8e48-58a9-49b1-aa76-a09bf6dbb633.png)
+![Admin's user page](https://user-images.githubusercontent.com/113292495/231662960-111d7c10-0b4c-4167-b02c-efc3f4c2e9ca.png)
+![Admin's Product page](https://user-images.githubusercontent.com/113292495/231662979-1dca70fd-5815-494e-87d7-99c2e98b4b7c.png)
 
-![Screenshot 2023-04-01 171010](https://user-images.githubusercontent.com/113932440/229286586-b7fe0b36-6e55-4b7b-96fd-e7e0838b7f18.png)
-
-## Made By
+## Developed By
 
 - [@Kakadiya-Harshal](https://github.com/Kakadiya-Harshal)
 - [@jaykantariya123](https://github.com/jaykantariya123)
