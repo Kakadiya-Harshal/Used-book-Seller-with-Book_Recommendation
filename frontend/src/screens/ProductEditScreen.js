@@ -115,7 +115,7 @@ const ProductEditScreen = ({ match, history }) => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
-              <Form.Label>Name of the property </Form.Label>
+              <Form.Label>Name of Book </Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter what product do you have'
