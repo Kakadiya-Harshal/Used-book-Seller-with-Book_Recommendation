@@ -64,7 +64,7 @@ const ProductScreen = ({ match, history }) => {
     var recom = [];
     setData1(data);
     if (data.recbook.length != 0) {
-      
+
       for (var i = 0; i < data.recbook[0].searched_book.length; i++) {
         console.log(data.product.description);
         recom[i] = (
@@ -133,7 +133,7 @@ const ProductScreen = ({ match, history }) => {
   return (
     <>
       <Link to="/">
-        <div style={{height:'42px' ,width:'42px'}}>
+        <div style={{ height: '42px', width: '42px' }}>
           <Backward />
         </div>
       </Link>
@@ -143,7 +143,7 @@ const ProductScreen = ({ match, history }) => {
           to={`/admin/product/${match.params.id}/edit`}
           className="btn btn-primary my-3"
         >
-          Edit Product
+          Edit Book Details
         </Link>
       )}
 

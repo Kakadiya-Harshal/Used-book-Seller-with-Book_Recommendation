@@ -106,7 +106,7 @@ const ProductEditScreen = ({ match, history }) => {
   return (
     <>
       <FormContainer>
-        <h1>Edit Product</h1>
+        <h1>Edit Book Details</h1>
 
         {loading ? (
           <Loader />
@@ -156,7 +156,7 @@ const ProductEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId='description'>
-              <Form.Label>Describe your property </Form.Label>
+              <Form.Label>Describe Book details </Form.Label>
               <Form.Control
                 as='textarea'
                 placeholder='Enter description'
