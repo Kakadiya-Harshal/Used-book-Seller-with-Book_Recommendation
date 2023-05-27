@@ -12,15 +12,14 @@ const SearchBox = ({ history }) => {
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
 
-  const submitHandler = (e) => {
+  const submitHandler =   (e) => {
 
     e.preventDefault()
     if (keyword.trim()) {
       history.push(`/search/${keyword}`)
     } else if (transcript.trim()) {
-
       setKeyword(transcript)
-      history.push(`/search/${keyword}`)
+      history.push(`/search/${transcript}`)
     } else {
       history.push('/')
     }
