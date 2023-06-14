@@ -17,6 +17,7 @@ import Loader from "../components/Loader";
 import {
   listProductDetails,
   createProductReview,
+  userPaymentRequest,
 } from "../actions/productActions";
 import axios from "axios";
 import { sendEmail } from "../actions/userActions";
@@ -124,7 +125,83 @@ const ProductScreen = ({ match, history }) => {
       setEmailSent(false);
     }, 10000);
   };
-  const sendEMAIL = () => {
+
+  const handlePurchaseBook = async (price) => {
+
+    // const { token } = cookies;
+    console.log(price);
+    console.log('on book buy');
+    try {
+
+      const response = await userPaymentRequest(price);
+      console.log(response)
+      console.log(response.data.data.id);
+
+      const options = {
+        key: "rzp_test_dRlCT5WmwmpnBu",
+        amount: 200,
+        currency: "INR",
+        name: 'Demo',
+        description: 'Test Payment',
+        image: 'https://avatars.githubusercontent.com/u/25058652?v=4',
+        order_id: response.data.data.id,
+        handler: async (response) => {
+          console.log(response);
+          console.log("booking success");
+          // props.postTableBook(props.tableId)
+
+          // try {
+          // const verificationResponse = await userPaymentVerify(response.razorpay_order_id, response.razorpay_payment_id,response.razorpay_signature);
+
+          // console.log(verificationResponse); 
+
+          //     if (verificationResponse.type === 'data') {
+
+          //         const response = await userbooking(token, params, user, doctor, timingSlot, textfeelling, meetingMode);
+
+          //         if (response.type === 'data') {
+
+
+          //         } else {
+
+          //         }
+          //     } else {
+
+          //     }
+          // } catch (error) {
+
+          // }
+          // handle successful payment response
+        },
+        prefill: {
+          name: 'John Doe',
+          email: 'john.doe@example.com',
+          contact: '+919876543210'
+        },
+        notes: {
+          address: 'Razorpay Corporate Office'
+        },
+        theme: {
+          color: '#F37254'
+        }
+      };
+      console.log(options);
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+
+    } catch (error) {
+      // dispatch(hideLoading());
+      // message.error("some thing went wrong");
+    }
+  };
+
+
+  const sendEMAIL = (price) => {
+    //console.log("hero");
+    console.log(price);
+    handlePurchaseBook(price);
+
+
     setSendMail(true);
   };
   const cancelHandler = () => {
@@ -283,7 +360,7 @@ const ProductScreen = ({ match, history }) => {
                       <span>
                         <button
                           className="emailbutton btn-success"
-                          onClick={sendEMAIL}
+                          onClick={() => sendEMAIL(product?.Cost?.price)}
                         >
                           Send Email
                         </button>

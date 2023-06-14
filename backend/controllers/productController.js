@@ -1,6 +1,8 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 import RecBook from "../models/recommendModel.js";
+import crypto from "crypto"; 
+import Razorpay from "razorpay"; 
 
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 6;
@@ -203,6 +205,69 @@ const reviewProduct = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Review successfully added" });
 });
 
+async function OrderPayment(req, res) {
+  try {
+    console.log("Kaihdaof")
+    const { price } = req.body;
+    // console.log(tableId, price);
+    // console.log(process.env.RAZORPAY_KEY_ID)
+    const instance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET_KEY,
+    });
+    const option = {
+      amount: Number(price * 100),
+      currency: "INR",
+    }
+    instance.orders.create(option, (error, order) => {
+      console.log(order)
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Somthing Went Wrong" });
+
+      }
+      res.status(200).json({ data: order, message: "Success" });
+    })
+    // res.status(200).send({
+    //     message: "Success",
+    //     // message: "TableBook get successfully"
+    // });
+  } catch (error) {
+    return res.status(404).json({
+      error: {
+        errorMessage: ['Internal Sever Error']
+      }
+    })
+  }
+}
+
+async function verifyPayment(req, res) {
+  try {
+    const { orderId, paymentId, signature } = req.body;
+    console.log("hii verify");
+    console.log(req.body);
+    const sign = orderId + "|" + paymentId;
+
+    const expectedSign = crypto.createHmc("sha256", process.env.RAZORPAY_SECRET_KEY).update(sign.toString()).digest("hex");
+    console.log(expectedSign);
+    if (signature === expectedSign) {
+      return res.status(200).json({
+        message: "payment verified succeffully",
+      })
+    } else {
+      return res.status(200).json({
+        message: "Invalid signature sent",
+      })
+    }
+  } catch (error) {
+    return res.status(404).json({
+      error: {
+        errorMessage: ['Internal Sever Error']
+      }
+    })
+  }
+}
+
 export {
   getProducts,
   getProductById,
@@ -210,4 +275,6 @@ export {
   createProduct,
   updateProduct,
   reviewProduct,
+  OrderPayment,
+  verifyPayment
 };

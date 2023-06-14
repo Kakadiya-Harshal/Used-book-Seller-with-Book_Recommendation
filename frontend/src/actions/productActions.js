@@ -268,3 +268,32 @@ export const createProductReview =
       });
     }
   };
+
+
+export const userPaymentRequest = async (price) => {
+  try {
+    console.log("Booking")
+    const res = await axios.post(`/api/products/payment`, {
+      price
+    });
+    console.log(res)
+    return res;
+  } catch (error) {
+    console.log(error.response.data.error.errorMessage);
+    alert(error.response.data.error.errorMessage);
+  }
+}
+
+export const userPaymentVerify = async (orderId, paymentId, signature) => {
+  try {
+    console.log("verify")
+    const res = await axios.post(`/api/products/verify`, {
+      orderId, paymentId, signature
+    });
+    console.log(res)
+    return res;
+  } catch (error) {
+    console.log(error.response.data.error.errorMessage);
+    alert(error.response.data.error.errorMessage);
+  }
+}

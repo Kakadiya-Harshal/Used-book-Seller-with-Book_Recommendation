@@ -7,6 +7,8 @@ import {
   createProduct,
   updateProduct,
   reviewProduct,
+  OrderPayment,
+  verifyPayment,
 } from '../controllers/productController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -18,5 +20,13 @@ router
   .get(getProductById)
   .delete(protect, admin, deleteProduct)
   .put(protect, updateProduct)
+
+router
+  .route('/payment')
+  .post(OrderPayment)
+
+router
+  .route('/verify')
+  .post(verifyPayment)
 
 export default router
