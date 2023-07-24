@@ -1,19 +1,24 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 import RecBook from "../models/recommendModel.js";
-import crypto from "crypto"; 
-import Razorpay from "razorpay"; 
+import crypto from "crypto";
+import Razorpay from "razorpay";
+import NodeCache from "node-cache";
+// const NodeCache = require('node-cache'); 
+
+const cache1 = new NodeCache({ stdTTL: 86400, checkperiod: 8640 });
+const cache2 = new NodeCache({ stdTTL: 86400, checkperiod: 8640 });
 
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 6;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: "i",
-        },
-      }
+      name: {
+        $regex: req.query.keyword,
+        $options: "i",
+      },
+    }
     : {};
 
   const count = await Product.countDocuments({ ...keyword });
@@ -22,7 +27,7 @@ const getProducts = asyncHandler(async (req, res) => {
   })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-  console.log(products);
+  // console.log(products);
   if (products.length !== 0) {
     res
       .status(201)
@@ -34,17 +39,42 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const getProductById = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    console.log(1);
+    const bookId = req.params.id;
+    const bookKey = `bookId-${bookId}`;
+    const recKey = `recNo-${bookId}`;
+    const cacheBookno = cache1.get(bookKey);
+    console.log(2);
+    // console.log(cacheBookno + "hello");
+    if (cacheBookno) {
+      //   console.log(3);
+      const recBookno = cache2.get(recKey);
+      console.log(4);
+      return res.json({ product: cacheBookno, recbook: JSON.parse(recBookno) });
+    }
+
+    const product = await Product.findById(bookId);
+    console.log(5);
+    cache1.set(bookKey, product);
+    console.log(6);
 
     const recbook = await RecBook.find({ bookname: `${product.name}` });
-
+    console.log(recKey, recbook);
+    cache2.set(recKey, JSON.stringify(recbook));
     if (product) {
+      console.log(7);
       res.json({ product: product, recbook: recbook });
     } else {
+      console.log(8);
       res.status(400).json({ message: "No product found" });
     }
   } catch (err) {
     console.log(err);
+    return res.status(404).json({
+      error: {
+        errorMessage: ['Internal Sever Error']
+      }
+    })
   }
 });
 
