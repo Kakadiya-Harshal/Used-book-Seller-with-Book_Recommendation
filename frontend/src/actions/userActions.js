@@ -31,8 +31,17 @@ import {
   USER_VERIFICATION_LINK_RESET,
 } from "../types/userConstants";
 
+import CryptoJS from "crypto-js";
+import encryptData from '../utils/encryptData.js';
+const secretKey = process.env.REACT_APP_SECRET_KEY;
+
+
 export const login = (email, password) => async (dispatch) => {
   try {
+
+    const objStr = JSON.stringify({ email, password });
+    const encryptedObj = CryptoJS.AES.encrypt(objStr, secretKey).toString();
+
     dispatch({
       type: USER_LOGIN_REQUEST,
     });
@@ -43,9 +52,10 @@ export const login = (email, password) => async (dispatch) => {
     };
     const { data } = await axios.post(
       "/api/users/login",
-      { email, password },
+      { encryptedObj },
       config
     );
+    //console.log(data);
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
@@ -61,7 +71,8 @@ export const login = (email, password) => async (dispatch) => {
           : error.message,
     });
   }
-};
+}
+  ;
 
 //for logout
 
@@ -120,7 +131,7 @@ export const verify =
 //user register
 
 export const register = (token) => async (dispatch) => {
-  try {
+  try { 
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
@@ -157,47 +168,48 @@ export const register = (token) => async (dispatch) => {
           : error.message,
     });
   }
-};
+}
+  ;
 
 //EMAIL SEND
 
 export const sendEmail =
   (receiver, text, name, address, productName, email, phone_no) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: EMAIL_SEND_REQUEST,
-      });
-      const {
-        userLogin: { userData },
-      } = getState();
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userData.token}`,
-        },
-      };
+    async (dispatch, getState) => {
+      try {
+        dispatch({
+          type: EMAIL_SEND_REQUEST,
+        });
+        const {
+          userLogin: { userData },
+        } = getState();
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userData.token}`,
+          },
+        };
 
-      const { data } = await axios.post(
-        "/api/users/email",
-        { receiver, text, name, address, productName, email, phone_no },
-        config
-      );
-      console.log(data);
-      dispatch({
-        type: EMAIL_SEND_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: EMAIL_SEND_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+        const { data } = await axios.post(
+          "/api/users/email",
+          { receiver, text, name, address, productName, email, phone_no },
+          config
+        );
+        console.log(data);
+        dispatch({
+          type: EMAIL_SEND_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: EMAIL_SEND_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        });
+      }
+    };
 
 //get all users by an  admin
 export const listUsers = () => async (dispatch, getState) => {

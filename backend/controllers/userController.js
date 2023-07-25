@@ -6,28 +6,42 @@ import jwt from "jsonwebtoken";
 import sgMail from "@sendgrid/mail";
 import generateToken from "../utils/generateToken.js";
 import nodemailer from "nodemailer";
+import CryptoJS from "crypto-js";
+import decryptData from '../utils/decryptData.js';
 dotenv.config();
 sgMail.setApiKey(process.env.SEND_GRID_API);
 
 const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  // console.log(user)
+  console.log(req.body);
+  const { encryptedObj } = req.body;
+  try {
+    const { email, password } = decryptData(encryptedObj);
 
-  if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      address: user.address,
-      contact: user.contact,
-      token: generateToken(user._id),
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchPassword(password))) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        address: user.address,
+        contact: user.contact,
+        token: generateToken(user._id),
+      });
+    }
+    else {
+      res.status(401);
+      throw new Error("Invalid email or password");
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: `Login Controller : ${error.message}`,
+      success: false,
     });
-  } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
   }
+  //const { email, password } = req.body;
+
 });
 
 //GET USER PROFILE

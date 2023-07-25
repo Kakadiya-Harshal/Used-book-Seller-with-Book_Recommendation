@@ -4,6 +4,11 @@ import RecBook from "../models/recommendModel.js";
 import crypto from "crypto";
 import Razorpay from "razorpay";
 import NodeCache from "node-cache";
+import { Mutex } from "async-mutex";
+
+// var Mutex = require('async-mutex').Mutex;
+
+// const mutex = new Mutex();
 // const NodeCache = require('node-cache'); 
 
 const cache1 = new NodeCache({ stdTTL: 86400, checkperiod: 8640 });
@@ -39,33 +44,31 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const getProductById = asyncHandler(async (req, res) => {
   try {
-    console.log(1);
+
     const bookId = req.params.id;
     const bookKey = `bookId-${bookId}`;
     const recKey = `recNo-${bookId}`;
     const cacheBookno = cache1.get(bookKey);
-    console.log(2);
-    // console.log(cacheBookno + "hello");
+
     if (cacheBookno) {
-      //   console.log(3);
+
       const recBookno = cache2.get(recKey);
-      console.log(4);
+
       return res.json({ product: cacheBookno, recbook: JSON.parse(recBookno) });
     }
 
     const product = await Product.findById(bookId);
-    console.log(5);
+
     cache1.set(bookKey, product);
-    console.log(6);
+
 
     const recbook = await RecBook.find({ bookname: `${product.name}` });
-    console.log(recKey, recbook);
+    //console.log(recKey, recbook);
     cache2.set(recKey, JSON.stringify(recbook));
     if (product) {
-      console.log(7);
+
       res.json({ product: product, recbook: recbook });
     } else {
-      console.log(8);
       res.status(400).json({ message: "No product found" });
     }
   } catch (err) {
@@ -235,10 +238,26 @@ const reviewProduct = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Review successfully added" });
 });
 
+// const cache3 = new NodeCache({ stdTTL: 500, checkperiod: 50 });
 async function OrderPayment(req, res) {
   try {
-    console.log("Kaihdaof")
+    // console.log("Kaihdaof")
     const { price } = req.body;
+
+    // await mutex.acquire();
+    // console.log(req.body);
+    // const Key = `${id}:${created_at}`;
+    // const cachedbook = cache3.get(Key);
+
+    // if (cachedbook) {
+    //   return res.status(400).send({
+    //     error: {
+    //       errorMessage: "Sorry, this book is choose by other person"
+    //     }
+    //   });
+    // }
+
+    // console.log(req.body);
     // console.log(tableId, price);
     // console.log(process.env.RAZORPAY_KEY_ID)
     const instance = new Razorpay({
@@ -262,6 +281,7 @@ async function OrderPayment(req, res) {
     //     message: "Success",
     //     // message: "TableBook get successfully"
     // });
+
   } catch (error) {
     return res.status(404).json({
       error: {
@@ -269,6 +289,9 @@ async function OrderPayment(req, res) {
       }
     })
   }
+  // finally {
+  //   mutex.release();
+  // }
 }
 
 async function verifyPayment(req, res) {
